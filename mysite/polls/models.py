@@ -1,9 +1,15 @@
 from django.db import models
 import datetime
 from django.utils import timezone
-from rest_framework import serializers
+
 # Create your models here.
 
+# class User_address(models.Model):
+#     street = models.CharField(max_length = 200)
+#     suite = models.CharField(max_length = 200)
+#     city = models.CharField(max_length = 200)
+#     zipcode = models.CharField(max_length = 200)
+    # address = models.ForeignKey(Our_users, on_delete = models.CASCADE)
 
 class Our_users(models.Model):
     name = models.CharField(max_length = 100)
@@ -12,26 +18,14 @@ class Our_users(models.Model):
     phone = models.CharField(max_length = 200, default = "")
     website = models.URLField(max_length = 200, default = "")
     # address = models.ForeignKey(User_address, on_delete = models.CASCADE)
+    address = models.JSONField(null = True) #NOT RIGHT
+    company = models.JSONField(null = True) #NOT RIGHT
 
     def __str__(self):
         return self.username
 #
-class User_address(models.Model):
-    street = models.CharField(max_length = 200)
-    suite = models.CharField(max_length = 200)
-    city = models.CharField(max_length = 200)
-    zipcode = models.CharField(max_length = 200)
-    address = models.ForeignKey(Our_users, on_delete = models.CASCADE)
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Our_users
-        fields = ('name', 'username', 'email', 'phone', 'website', 'address')
 
-class AddressSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User_address
-        fields = ('street', 'suite', 'city', 'zipcode')
 #
 # class User_geo(models.Model):
 #     lat = models.CharField(max_length=128)
