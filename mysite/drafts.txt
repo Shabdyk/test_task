@@ -1,0 +1,31 @@
+# data = [
+  #             {
+  #                 "model" : "polls.our_users",
+  #                 "pk" : 1,
+  #                 "fields" : {
+  #                                 # "id": 1,
+  #                                 "name": "Leanne Graham",
+  #                                 "username": "Bret"
+  #                             }
+  #             }
+  #         ]
+   ######################
+  # [
+  #     {
+  #         "model": "polls.question",
+  #         "pk": 1,
+  #         "fields": {"question_text": "howreyou", "pub_date": "2021-11-23T11:53:32.177Z"}
+  #     }
+  # ]
+   ######################
+  # for obj in data:
+  #     result.append(obj)
+
+  # for obj in serializers.deserialize("json", str(data)):
+  #     result.append("suc")
+
+  class LazyEncoder(DjangoJSONEncoder):
+      def default(self, obj):
+          if isinstance(obj, YourCustomType):
+              return str(obj)
+          return super().default(obj)
