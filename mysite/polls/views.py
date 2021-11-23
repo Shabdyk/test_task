@@ -37,7 +37,8 @@ def data_fixture(json_data):
         ]
         ke =+ 1
 
-    for ds in serializers.deserialize("json", json.dumps(data)):
-        result.append('suc')
+        for ds in serializers.deserialize("json", json.dumps(data)):
+            ds.save()
+            result.append('suc')
 
     return result
