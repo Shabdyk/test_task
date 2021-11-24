@@ -50,20 +50,36 @@ def data_fixture(path = '', model = ''):
     if model == '':
         model = str(input("Enter model: ")) #MODEL INPUT
 
+    def recu(json_data,model):
+        # appname = model.split(".")[0]
+        result = []
+        for obj in json_data:
+            print('obj ', obj)
+            try:
+                for obkey, obval in zip(obj,obj.values()):
+                    # print('obval ', obval)
+                    if isinstance(obval, dict):
+                        # print('rec', obkey, obval)
+                        recu(obval,obkey)
+            except AttributeError:
+                print('atrerr', obj)
 
-    for obj in json_data:
-        data = [
-            {
-            "model" : model,
-            "fields" : obj
-            }
-        ]
+            data = [
+                {
+                "model" : model,
+                "fields" : obj
+                }
+            ]
+            # result.append(data)
+        return result
 
-        for ds in serializers.deserialize("json", json.dumps(data)):
-            ds.save()
+    return recu(json_data,model)
 
-            # print(ds.object.address)
+        # for ds in serializers.deserialize("json", json.dumps(data)):
+            # ds.save()
+
+            # print(ds.object)
 
 
 
-    return "Database updated. Model: " + model
+    # return data

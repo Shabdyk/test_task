@@ -9,25 +9,25 @@ class Our_users(models.Model):
     email = models.EmailField(max_length = 50, default = "")
     phone = models.CharField(max_length = 200, default = "")
     website = models.URLField(max_length = 200, default = "")
-    address = models.ForeignKey("User_address", on_delete = models.CASCADE)
-    company = models.ForeignKey("User_company", on_delete = models.CASCADE)
+    address = models.ForeignKey("Address", on_delete = models.CASCADE)
+    company = models.ForeignKey("Company", on_delete = models.CASCADE)
 
     def __str__(self):
         return self.name
 
-class User_address(models.Model):
+class Address(models.Model):
     street = models.CharField(max_length = 200)
     suite = models.CharField(max_length = 200)
     city = models.CharField(max_length = 200)
     zipcode = models.CharField(max_length = 200)
-    geo = models.ForeignKey("User_geo", on_delete = models.CASCADE)
+    geo = models.ForeignKey("Geo", on_delete = models.CASCADE)
 
-class User_company(models.Model):
+class Company(models.Model):
     name = models.CharField(max_length = 100)
     catchPhrase = models.CharField(max_length = 200)
     bs = models.CharField(max_length = 200)
 
-class User_geo(models.Model):
+class Geo(models.Model):
     lat = models.CharField(max_length = 50)
     lng = models.CharField(max_length = 50)
 
