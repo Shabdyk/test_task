@@ -6,6 +6,28 @@
   </head>
   <body>
     <h1>Таблица типа</h1>
-    {{ insert_me }}
+
+    <div class="users">
+
+      {% if users %}
+        <table>
+          <thead>
+            <th>Пользователь</th>
+            <th>Название</th>
+            <th>Текст</th>
+          </thead>
+
+          {% for pos in posts %}
+          <tr>
+            <td>{{ pos.userId }}</td>
+            <td>{{ pos.title }}</td>
+            <td>{{ pos.body }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      {% else %}
+        <p>Ничо нет</p>
+      {% endif %}
+    </div>
   </body>
 </html>

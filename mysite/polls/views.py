@@ -8,8 +8,16 @@ from .models import Our_users, User_posts
 
 # Create your views here.
 def index(request):
-    my_dict = {'insert_me' : "Тут должна быть таблица"}
-    return render(request, 'polls/index.html', context = my_dict)
+    
+    users_list = Our_users.objects.all()
+    posts_list = User_posts.objects.all()
+
+    posts_dict = {
+                    'posts': posts_list,
+                    'users': users_list
+                  }
+
+    return render(request, 'polls/index.html', context = posts_dict)
 
 def loc_json(json_path):
     with open(json_path) as f:

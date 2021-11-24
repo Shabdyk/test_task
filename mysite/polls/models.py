@@ -22,7 +22,7 @@ class Our_users(models.Model):
     company = models.JSONField(null = True) #NOT RIGHT
 
     def __str__(self):
-        return self.username
+        return self.name
 
 
 class User_posts(models.Model):
