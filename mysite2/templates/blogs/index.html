@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Страница с таблицей</title>
+  </head>
+  <body>
+    <h1>Тестовое задание</h1>
+
+    <div class="users">
+
+
+
+      <form method="GET">
+
+        <p>
+          Отфильтровать по автору: {{ user_filter_choice }}
+          <input type="submit" value="Отфильтровать">
+        </p>
+      </form>
+      {% if posts %}
+        <table>
+          <thead>
+            <th>Имя пользователя</th>
+            <th>Тема поста</th>
+            <th>Текст поста</th>
+          </thead>
+
+          {% for pos in posts %}
+          <tr>
+            <td>{{ pos.userId }}</td>
+            <td>{{ pos.title }}</td>
+            <td>{{ pos.body }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      {% else %}
+        <p>Ничо нет</p>
+      {% endif %}
+    </div>
+  </body>
+</html>
