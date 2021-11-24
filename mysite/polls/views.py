@@ -3,40 +3,39 @@ from django.http import HttpResponse
 import json
 import requests
 from django.core import serializers
-# from django.core.serializers.json import DjangoJSONEncoder
+from .models import Our_users, User_posts
 
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Hello its the polls page")
+    my_dict = {'insert_me' : "Тут должна быть таблица"}
+    return render(request, 'polls/index.html', context = my_dict)
 
+def loc_json(json_path):
+    with open(json_path) as f:
+        data_loc = json.load(f)
+    return data_loc
+def web_json(json_url):
+    file = requests.get(json_url)
+    return file.json()
 
 def data_fixture(path = '', model = ''):
-    def loc_json(json_path):
-        with open(json_path) as f:
-            data_loc = json.load(f)
-        return data_loc
-    def web_json(json_url):
-        file = requests.get(json_url)
-        return file.json()
 
     if path == '':
-        path = str(input("Enter path: "))
-
+        path = str(input("Enter path: ")) #FILE-PATH INPUT
     if "http://" in path:
         try:
             json_data = web_json(path)
         except:
             return "Invalid link"
-
+ #CHECK IF PATH IS WEB-URL
     else:
         try:
             json_data = loc_json(path)
         except FileNotFoundError:
-            return "File '{}' not found".format(path) #TBD
-
+            return "File '{}' not found".format(path)                 #CHECK IF PATH IS LOCAL
     if model == '':
-        model = str(input("Enter model: "))
+        model = str(input("Enter model: ")) #MODEL INPUT
 
     result = []
     for obj in json_data:
@@ -46,11 +45,12 @@ def data_fixture(path = '', model = ''):
             "fields" : obj
             }
         ]
-        try:
+        try: #AT THE END TRY RECCURSION
             for ds in serializers.deserialize("json", json.dumps(data)):
                 try:
                     ds.save()
                     result.append('suc')
+                    # print(ds.object.address)
                 except:
                     if len(result) == 0:
                         return "Database was not updated due to the database error"
