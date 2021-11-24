@@ -4,17 +4,20 @@ import json
 import requests
 from django.core import serializers
 from .models import Our_users, User_posts
+from .forms import FilterForm
 
 
 # Create your views here.
 def index(request):
-    
+
     users_list = Our_users.objects.all()
     posts_list = User_posts.objects.all()
+    filter_form = FilterForm
 
     posts_dict = {
                     'posts': posts_list,
-                    'users': users_list
+                    'users': users_list,
+                    'user_filter_choice' : filter_form
                   }
 
     return render(request, 'polls/index.html', context = posts_dict)

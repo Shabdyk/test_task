@@ -10,6 +10,13 @@
     <div class="users">
 
       {% if users %}
+
+      <form method="post">
+        {% csrf_token %}
+        {{ user_filter_choice }}
+        <input type="submit" value="Отфильтровать">
+      </form>
+
         <table>
           <thead>
             <th>Пользователь</th>
