@@ -24,21 +24,21 @@ def web_json(json_url = "http://jsonplaceholder.typicode.com/users"):
     data_json = file.json()
     return data_json
 
-def data_fixture(json_data):
+def data_fixture(json_data, model):
     result = []
     for obj in json_data:
-        ke = 1
+        # ke = 1
         data = [
             {
-            "pk" : ke,
-            "model" : "polls.our_users",
+            # "pk" : ke,
+            "model" : model,
             "fields" : obj
             }
         ]
-        ke =+ 1
+        # ke =+ 1
 
         for ds in serializers.deserialize("json", json.dumps(data)):
             ds.save()
-            result.append('suc')
+            result.append('succcess')
 
     return result

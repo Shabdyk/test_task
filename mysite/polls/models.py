@@ -23,7 +23,18 @@ class Our_users(models.Model):
 
     def __str__(self):
         return self.username
-#
+
+
+
+class User_posts(models.Model):
+    userId = models.ForeignKey(Our_users, on_delete = models.CASCADE, to_field = 'id')
+
+    title = models.CharField(max_length = 200)
+    body = models.TextField()
+
+    def __str__(self):
+        return self.title
+
 
 
 #
