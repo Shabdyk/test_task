@@ -25,7 +25,6 @@ class Our_users(models.Model):
         return self.username
 
 
-
 class User_posts(models.Model):
     userId = models.ForeignKey(Our_users, on_delete = models.CASCADE, to_field = 'id')
 

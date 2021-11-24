@@ -1,8 +1,8 @@
-from views import loc_json, web_json, data_fixture
+from polls.views import loc_json, web_json, data_fixture
 
 target_url = 'http://jsonplaceholder.typicode.com/posts'
 target_model = 'polls.user_posts'
 
 json_data = web_json(target_url)
 
-data_fixture(json_data, target_model)
+act = data_fixture(json_data, target_model)

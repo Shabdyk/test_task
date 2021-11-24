@@ -3,42 +3,63 @@ from django.http import HttpResponse
 import json
 import requests
 from django.core import serializers
-from django.core.serializers.json import DjangoJSONEncoder
+# from django.core.serializers.json import DjangoJSONEncoder
 
 
 # Create your views here.
 def index(request):
     return HttpResponse("Hello its the polls page")
 
-def loc_json(json_path = 'polls/ini_db.json'):
-    with open(json_path) as f:
-        # json.dump(doubleQString ,f)
-        data_loc = json.load(f)
+# def loc_json(json_path = 'polls/ini_db.json'):
+#     with open(json_path) as f:
+#         data_loc = json.load(f)
+#     return data_loc
+#
+# def web_json(json_url = "http://jsonplaceholder.typicode.com/users"):
+#     file = requests.get(json_url)
+#     return file.json()
 
-    return data_loc
+def data_fixture(path = '', model = ''):
+    def loc_json(json_path):
+        with open(json_path) as f:
+            data_loc = json.load(f)
+        return data_loc
+    def web_json(json_url):
+        file = requests.get(json_url)
+        return file.json()
 
-def web_json(json_url = "http://jsonplaceholder.typicode.com/users"):
+    if path == '':
+        path = str(input("Enter path: "))
 
-    result = []
-    file = requests.get(json_url)
-    data_json = file.json()
-    return data_json
+    if "http://" or "https://" in path:
+        try:
+            json_data = web_json(path)
+        except JSONDecodeError:
+            return "Invalid link"
+    else:
+        try:
+            json_data = loc_json(path)
+        except FileNotFoundError:
+            return "File {} not found".format(path)
 
-def data_fixture(json_data, model):
+    if model == '':
+        model = str(input("Enter model: "))
+
+
+
     result = []
     for obj in json_data:
-        # ke = 1
         data = [
             {
-            # "pk" : ke,
             "model" : model,
             "fields" : obj
             }
         ]
-        # ke =+ 1
-
-        for ds in serializers.deserialize("json", json.dumps(data)):
-            ds.save()
-            result.append('succcess')
+        try:
+            for ds in serializers.deserialize("json", json.dumps(data)):
+                ds.save()
+                result.append('succcess')
+        except serializers.base.DeserializationError:
+            return "Seems like json-data and models do not correlate"
 
     return result
