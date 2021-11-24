@@ -57,17 +57,19 @@ def data_fixture(path = '', model = ''):
             # print('obj ', obj)
             def recur(obj,model):
                 for obkey, obval in zip(obj,obj.values()):
-                    print(obkey, obval)
+                    # print(obkey, obval)
                     if isinstance(obval, dict):
-                        print('rec', obkey, obval)
+                        # print('rec', obkey, obval)
                         recur(obval,obkey)
-                data = [
-                    {
-                    "model" : model,
-                    "fields" : obj
-                    }
-                ]
-            recur(obj,model)
+                        data = [
+                            {
+                            "model" : model,
+                            "fields" : obval,
+                            }
+                        ]
+
+                return data
+            return recur(obj,model)
 
 
             # result.append(data)
