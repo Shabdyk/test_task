@@ -10,14 +10,17 @@ from .forms import FilterForm
 # Create your views here.
 def index(request):
 
-    users_list = Our_users.objects.all()
+    # users_list = Our_users.objects.all()
     posts_list = User_posts.objects.all()
-    filter_form = FilterForm
+
+    if request.GET:
+        chosen_one = request.GET['filter_by_user']
+        posts_list = User_posts.objects.filter(userId = chosen_one)
 
     posts_dict = {
                     'posts': posts_list,
-                    'users': users_list,
-                    'user_filter_choice' : filter_form
+                    # 'users': users_list,
+                    'user_filter_choice' : FilterForm
                   }
 
     return render(request, 'polls/index.html', context = posts_dict)

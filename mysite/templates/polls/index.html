@@ -5,23 +5,25 @@
     <title>Страница с таблицей</title>
   </head>
   <body>
-    <h1>Таблица типа</h1>
+    <h1>Тестовое задание</h1>
 
     <div class="users">
 
-      {% if users %}
 
-      <form method="post">
-        {% csrf_token %}
-        {{ user_filter_choice }}
-        <input type="submit" value="Отфильтровать">
+
+      <form method="GET">
+
+        <p>
+          Отфильтровать по автору: {{ user_filter_choice }}
+          <input type="submit" value="Отфильтровать">
+        </p>
       </form>
-
+      {% if posts %}
         <table>
           <thead>
-            <th>Пользователь</th>
-            <th>Название</th>
-            <th>Текст</th>
+            <th>Имя пользователя</th>
+            <th>Тема поста</th>
+            <th>Текст поста</th>
           </thead>
 
           {% for pos in posts %}
