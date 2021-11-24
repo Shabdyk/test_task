@@ -54,22 +54,22 @@ def data_fixture(path = '', model = ''):
         # appname = model.split(".")[0]
         result = []
         for obj in json_data:
-            print('obj ', obj)
-            try:
+            # print('obj ', obj)
+            def recur(obj,model):
                 for obkey, obval in zip(obj,obj.values()):
-                    # print('obval ', obval)
+                    print(obkey, obval)
                     if isinstance(obval, dict):
-                        # print('rec', obkey, obval)
-                        recu(obval,obkey)
-            except AttributeError:
-                print('atrerr', obj)
+                        print('rec', obkey, obval)
+                        recur(obval,obkey)
+                data = [
+                    {
+                    "model" : model,
+                    "fields" : obj
+                    }
+                ]
+            recur(obj,model)
 
-            data = [
-                {
-                "model" : model,
-                "fields" : obj
-                }
-            ]
+
             # result.append(data)
         return result
 
