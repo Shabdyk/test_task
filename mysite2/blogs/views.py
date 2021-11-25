@@ -50,57 +50,25 @@ def data_fixture(path = '', model = ''):
     if model == '':
         model = str(input("Enter model: ")) #MODEL INPUT
 
-    def recu(json_data,model):
-        app_name = model.split(".")[0]
-        result = []
-        for obj in json_data:
 
-            def recu(model, obj, app):
-                for dikey, dival in list(obj.items()):
-                    if isinstance(dival,dict):
-                        subdic = obj.pop(dikey)
-                        # print(dikey, subdic)
-                        model = "{}.{}".format(app,dikey)
-                        recu(model,subdic,app)
-                data = [{
-                        "model" : model,
-                        "fields" : obj
-                        }]
-                print(data)
+    app_name = model.split(".")[0]
+    result = []
+    for obj in json_data:
 
-            recu(model, obj, app_name)
+        def recu(model, obj, app):
+
+            for dikey, dival in list(obj.items()):
+                if isinstance(dival,dict):
+                    subdic = obj.pop(dikey)
+                    in_model = "{}.{}".format(app,dikey)
+                    recu(in_model,subdic,app)
+            data = [{
+                    "model" : model,
+                    "fields" : obj
+                    }]
+            print(data)
 
 
+        recu(model, obj, app_name)
 
-            # def recur(obj,model):
-            #     rec_data = []
-            #     for obkey, obval in zip(obj,obj.values()):
-            #         # print(obkey, obval)
-            #         if isinstance(obval, dict):
-            #             # print('rec', obkey, obval)
-            #
-            #             data = [
-            #                 {
-            #                 "model" : obkey,
-            #                 "fields" : obval,
-            #                 }
-            #             ]
-            #             recur(obval,obkey)
-            #             rec_data.append(data)
-            #     return rec_data
-            # result.append(recur(obj,model))
-
-
-            # result.append(data)
-        return result
-
-    return recu(json_data,model)
-
-        # for ds in serializers.deserialize("json", json.dumps(data)):
-            # ds.save()
-
-            # print(ds.object)
-
-
-
-    # return data
+    return 'DONE'
