@@ -66,7 +66,9 @@ def data_fixture(path = '', model = ''):
                     "model" : model,
                     "fields" : obj
                     }]
-            print(data)
+            # print(data)
+            for ds in serializers.deserialize("json", json.dumps(data)):
+                print("deserialized")
 
 
         recu(model, obj, app_name)
