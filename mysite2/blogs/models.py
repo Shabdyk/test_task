@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
 from django.utils import timezone
+from django.core import serializers
 
 # Create your models here.
 class Our_users(models.Model):
@@ -13,14 +14,14 @@ class Our_users(models.Model):
         return self.name
 
 class Address(models.Model):
-    our_user =  models.ForeignKey("Our_users", on_delete = models.CASCADE)
+    our_users =  models.ForeignKey("Our_users", on_delete = models.CASCADE)
     street = models.CharField(max_length = 200)
     suite = models.CharField(max_length = 200)
     city = models.CharField(max_length = 200)
     zipcode = models.CharField(max_length = 200)
 
 class Company(models.Model):
-    our_user =  models.ForeignKey("Our_users", on_delete = models.CASCADE)
+    our_users =  models.ForeignKey("Our_users", on_delete = models.CASCADE)
     name = models.CharField(max_length = 100)
     catchPhrase = models.CharField(max_length = 200)
     bs = models.CharField(max_length = 200)

@@ -69,7 +69,7 @@ def data_fixture(path = '', model = ''):
                     subdic = obj.pop(dikey)
                     subdic["{}_id".format(main_key)] = main_id
                     # print("IN IF {}".format(dikey))
-                    print(subdic)
+                    # print(subdic)
                     in_model = "{}.{}".format(app,dikey)
                     # in_model = "{}.{}".format(app,main_key)
                     recu(in_model,subdic,app)
@@ -77,10 +77,10 @@ def data_fixture(path = '', model = ''):
                     "model" : model,
                     "fields" : obj
                     }]
-            # print(data)
+            print(data)
             # for ds in serializers.deserialize("json", json.dumps(data)):
-            #     # ds.save()
-            #     print("saved")
+            #     ds.save()
+                # print("saved")
         recu(model, obj, app_name)
 
     return 'DONE'
