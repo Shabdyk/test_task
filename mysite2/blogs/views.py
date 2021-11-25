@@ -56,21 +56,31 @@ def data_fixture(path = '', model = ''):
     for obj in json_data:
 
         def recu(model, obj, app):
-
+            # print(obj)
             for dikey, dival in list(obj.items()):
+
+                if dikey == 'id':
+                    global main_id
+                    main_id = dival
+
+                main_key = model.split(".")[1]
+
                 if isinstance(dival,dict):
                     subdic = obj.pop(dikey)
+                    subdic["{}_id".format(main_key)] = main_id
+                    # print("IN IF {}".format(dikey))
+                    print(subdic)
                     in_model = "{}.{}".format(app,dikey)
+                    # in_model = "{}.{}".format(app,main_key)
                     recu(in_model,subdic,app)
             data = [{
                     "model" : model,
                     "fields" : obj
                     }]
             # print(data)
-            for ds in serializers.deserialize("json", json.dumps(data)):
-                print("deserialized")
-
-
+            # for ds in serializers.deserialize("json", json.dumps(data)):
+            #     # ds.save()
+            #     print("saved")
         recu(model, obj, app_name)
 
     return 'DONE'
